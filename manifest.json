@@ -5,10 +5,10 @@
         "background.js"
       ]
    },
-   "description": "Copy text in web page as markdown quotation",
+   "description": "Copy text in DX Help as markdown",
    "manifest_version": 2,
    "minimum_chrome_version": "24",
-   "name": "Copy as Markdown Quotation",
+   "name": "Copy DX Help as Markdown",
     "icons": { "16": "icon16.png",
                "48": "icon48.png",
               "128": "icon128.png" },

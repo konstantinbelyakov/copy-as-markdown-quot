@@ -180,6 +180,22 @@ function toMarkdownCodeBlock(markdown, extension) {
     ].join('');
 }
 
+
+function dxClean(markdown) {
+    markdown = markdown.replace(/!\[Expanded]\(.*\)!\[Collapsed]\(.*\) /g, "");
+	markdown = markdown.replace(/DX\.Tabs\.init\('dxTab\d'\);/g, "");
+	markdown = markdown.replace(/^Tip\n\n/gm, "> #### Tip\n> ");
+	markdown = markdown.replace(/^Note\n\n/gm, "> #### Note\n> ");
+	markdown = markdown.replace(/^Important\n\n/gm, "> #### Important\n> ");
+	markdown = markdown.replace(/^Show Me\n\n/gm, "> #### Show Me\n> ");
+	markdown = markdown.replace(/^C#\n\nVB\n\n<pre>[\S\s]*<\/pre>\n\n<pre>[\S\s]*<\/pre>\n\nC#/gm, "C#");
+	markdown = markdown.replace(/^C#\n\n/gm, "#### C#\n\n");
+	markdown = markdown.replace(/^VB\n\n/gm, "#### VB\n\n");
+	return markdown;
+    
+}
+
+
 var copy_as_markdown_quot = function (args) {
     chrome.tabs.executeScript( {
           code: "(" + get_selection + ")();"
@@ -190,7 +206,7 @@ var copy_as_markdown_quot = function (args) {
         var ext = selections[0].ext;
 
         var result = selection.type === 'html'
-            ? toMarkdownQuote(toCleanMarkdown(selection.value))
+            ? dxClean(toCleanMarkdown(selection.value))
             : selection.value;
 
         if (pre) {
@@ -216,7 +232,7 @@ function copyTextToClipboard(text) {
 }
 
 chrome.contextMenus.create({
-    title: "Copy as Markdown quotation",
+    title: "Copy DX Help as Markdown",
     contexts: ['selection'],
     onclick: copy_as_markdown_quot
 });
