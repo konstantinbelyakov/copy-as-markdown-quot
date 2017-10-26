@@ -183,14 +183,27 @@ function toMarkdownCodeBlock(markdown, extension) {
 
 function dxClean(markdown) {
     markdown = markdown.replace(/!\[Expanded]\(.*\)!\[Collapsed]\(.*\) /g, "");
-	markdown = markdown.replace(/DX\.Tabs\.init\('dxTab\d'\);/g, "");
+	markdown = markdown.replace(/DX\.Tabs\.init\('dxTab\d+'\);/g, "");
 	markdown = markdown.replace(/^Tip\n\n/gm, "> #### Tip\n> ");
 	markdown = markdown.replace(/^Note\n\n/gm, "> #### Note\n> ");
 	markdown = markdown.replace(/^Important\n\n/gm, "> #### Important\n> ");
 	markdown = markdown.replace(/^Show Me\n\n/gm, "> #### Show Me\n> ");
-	markdown = markdown.replace(/^C#\n\nVB\n\n<pre>[\S\s]*<\/pre>\n\n<pre>[\S\s]*<\/pre>\n\nC#/gm, "C#");
+	markdown = markdown.replace(/^C#\n\nVB\n\n<pre>[\S\s]*?<\/pre>\n\n<pre>[\S\s]*?<\/pre>\n\nC#/gm, "C#");
 	markdown = markdown.replace(/^C#\n\n/gm, "#### C#\n\n");
 	markdown = markdown.replace(/^VB\n\n/gm, "#### VB\n\n");
+	markdown = markdown.replace(/!\[]\(\/HelpResource\.ashx\?/g, "![Image](https://documentation.devexpress.com/HelpResource.ashx?");
+	markdown = markdown.replace(/<pre>/g, "```");
+	markdown = markdown.replace(/<\/pre>/g, "```");
+		
+	markdown = markdown.replace(/^Xml\n\n```[\S\s]*?```\n\nXml/gm, "#### XML");
+	
+	markdown = markdown.replace(/^#### XML\n\n```/gm, "#### XML\n\n```xml\n");
+	markdown = markdown.replace(/^#### C#\n\n```/gm, "#### C#\n\n```csharp\n");
+	markdown = markdown.replace(/^#### VB\n\n```/gm, "#### VB\n\n```vbnet\n");
+	
+	
+	
+	
 	return markdown;
     
 }
